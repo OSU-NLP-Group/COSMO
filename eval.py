@@ -22,7 +22,7 @@ from tqdm import tqdm
 from utils import collate_list, detach_and_clone, move_to
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-from wilds.common.metrics.all_metrics import Accuracy, Recall, F1
+from wilds.common.metrics.all_metrics import Accuracy
 from PIL import Image
 from dataset import iWildCamOTTDataset
 
@@ -63,8 +63,6 @@ def evaluate(model, val_loader, target_list, args):
 
     metrics = [
         Accuracy(prediction_fn=None),
-        Recall(prediction_fn=None, average='macro'),
-        F1(prediction_fn=None, average='macro'),
     ]
 
     results = {}
@@ -74,7 +72,7 @@ def evaluate(model, val_loader, target_list, args):
             **metrics[i].compute(epoch_y_pred, epoch_y_true),
                     })
 
-    print(f'Eval., split: {args.split}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100:.2f}, F1 macro: {results[metrics[2].agg_metric_field]*100:.2f}')
+    print(f'Eval., split: {args.split}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100:.2f}')
 
     return
 
@@ -100,6 +98,7 @@ def generate_target_list(data, entity2id):
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset', choices=['iwildcam', 'mountain_zebra'], default='iwildcam')
     parser.add_argument('--data-dir', type=str, default='../iwildcam_v2.0/')
     parser.add_argument('--img-dir', type=str, default='../iwildcam_v2.0/imgs/')
     parser.add_argument('--split', type=str, default='val')
@@ -133,15 +132,19 @@ if __name__=='__main__':
 
     print('args = {}'.format(args))
     args.device = torch.device('cuda') if not args.no_cuda and torch.cuda.is_available() else torch.device('cpu')
+    print(args.device)
 
     # Set random seed
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
     random.seed(args.seed)
 
-    datacsv = pd.read_csv(os.path.join(args.data_dir, 'dataset_subtree.csv'), low_memory=False)
-
-    entity_id_file = os.path.join(args.data_dir, 'entity2id_subtree.json')
+    if args.dataset == 'iwildcam':
+        datacsv = pd.read_csv(os.path.join(args.data_dir, 'dataset_subtree.csv'), low_memory=False)
+        entity_id_file = os.path.join(args.data_dir, 'entity2id_subtree.json')
+    else:
+        datacsv = pd.read_csv(os.path.join(args.data_dir, 'data_triples.csv'), low_memory=False)
+        entity_id_file = os.path.join(args.data_dir, 'entity2id.json')
 
     if not os.path.exists(entity_id_file):
         entity2id = {} # each of triple types have their own entity2id

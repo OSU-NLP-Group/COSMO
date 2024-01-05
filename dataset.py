@@ -36,18 +36,21 @@ class iWildCamOTTDataset(Dataset):
             train_indices = np.random.choice(np.arange(len(self.datacsv)), size=args.subset_size, replace=False)
             self.datacsv = self.datacsv.iloc[train_indices]
         
-        datacsv_loc = datacsv.loc[(datacsv['datatype_h'] == 'image') & (datacsv['datatype_t'] == 'location')]
+        if head_type == 'image' and tail_type == 'location':
+            datacsv_loc = datacsv.loc[(datacsv['datatype_h'] == 'image') & (datacsv['datatype_t'] == 'location')]
 
-        self.location_to_id = {}
+            self.location_to_id = {}
 
-        for i in range(len(datacsv_loc)):
-            loc = datacsv_loc.iloc[i, 3]
+            for i in range(len(datacsv_loc)):
+                loc = datacsv_loc.iloc[i, 3]
 
-            assert loc[0] == '['
-            assert loc[-1] == ']'
-            # print(loc)
-            if loc not in self.location_to_id:
-                self.location_to_id[loc] = len(self.location_to_id)
+                assert loc[0] == '['
+                assert loc[-1] == ']'
+                # print(loc)
+                if loc not in self.location_to_id:
+                    self.location_to_id[loc] = len(self.location_to_id)
+
+            self.all_locs = torch.stack(list(map(lambda x:getNumber(x), self.location_to_id.keys())))
 
         self.all_timestamps = None
 
@@ -72,8 +75,6 @@ class iWildCamOTTDataset(Dataset):
             self.all_timestamps = torch.stack(list(map(lambda x:torch.tensor(x), self.time_to_id.keys())))
             if len(self.all_timestamps.size())==1:
                 self.all_timestamps = self.all_timestamps.unsqueeze(-1)
-
-        self.all_locs = torch.stack(list(map(lambda x:getNumber(x), self.location_to_id.keys())))
 
     def __len__(self):
         return len(self.datacsv)

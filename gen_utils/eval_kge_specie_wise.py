@@ -22,10 +22,9 @@ from tqdm import tqdm
 from utils import collate_list, detach_and_clone, move_to
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-from wilds.common.metrics.all_metrics import Accuracy, Recall, F1
+from wilds.common.metrics.all_metrics import Accuracy
 from PIL import Image
 from dataset import iWildCamOTTDataset
-from sklearn.metrics import f1_score
 
 if __name__=='__main__':
 	parser = argparse.ArgumentParser()

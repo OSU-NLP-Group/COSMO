@@ -23,7 +23,7 @@ from tqdm import tqdm
 from utils import collate_list, detach_and_clone, move_to
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-from wilds.common.metrics.all_metrics import Accuracy, Recall, F1
+from wilds.common.metrics.all_metrics import Accuracy
 from PIL import Image
 from dataset import iWildCamOTTDataset
 from pytorchtools import EarlyStopping
@@ -87,8 +87,6 @@ def train_image_id(train_loader, model, optimizer, writer, args, epoch_id):
 
     metrics = [
         Accuracy(prediction_fn=None),
-        Recall(prediction_fn=None, average='macro'),
-        F1(prediction_fn=None, average='macro'),
     ]
 
     results = {}
@@ -100,10 +98,9 @@ def train_image_id(train_loader, model, optimizer, writer, args, epoch_id):
 
     
     results['epoch'] = epoch_id
-    print(f'Train epoch {epoch_id}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100.0:.2f}, F1 macro: {results[metrics[2].agg_metric_field]*100.0:.2f}')
+    print(f'Train epoch {epoch_id}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100.0:.2f}')
     
     writer.add_scalar('acc_image_id/train', results[metrics[0].agg_metric_field]*100.0, epoch_id)
-    writer.add_scalar('f1_macro_image_id/train', results[metrics[2].agg_metric_field]*100.0, epoch_id)
 
 #################
 # id to id
@@ -306,8 +303,6 @@ def evaluate(model, val_loader, optimizer, early_stopping, epoch_id, writer, arg
 
     metrics = [
         Accuracy(prediction_fn=None),
-        Recall(prediction_fn=None, average='macro'),
-        F1(prediction_fn=None, average='macro'),
     ]
 
     results = {}
@@ -327,9 +322,8 @@ def evaluate(model, val_loader, optimizer, early_stopping, epoch_id, writer, arg
     writer.add_scalar('image_id_loss/val', avg_loss_image_id, epoch_id)
 
     writer.add_scalar('acc_image_id/val', results[metrics[0].agg_metric_field]*100, epoch_id)
-    writer.add_scalar('f1_macro_image_id/val', results[metrics[2].agg_metric_field]*100, epoch_id)
 
-    print(f'Eval. epoch {epoch_id}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100:.2f}, F1 macro: {results[metrics[2].agg_metric_field]*100:.2f}')
+    print(f'Eval. epoch {epoch_id}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100:.2f}')
 
     return results, epoch_y_pred
 
@@ -360,6 +354,7 @@ def main():
     parser.add_argument('--img-dir', type=str, default='iwildcam_v2.0/imgs/')
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--n_epochs', type=int, default=12)
+    parser.add_argument('--img-lr', type=float, default=3e-5, help='lr for img embed params')
     parser.add_argument('--lr', type=float, default=1e-3, help='default lr for all parameters')
     parser.add_argument('--loc-lr', type=float, default=1e-3, help='lr for location embedding')
     parser.add_argument('--time-lr', type=float, default=1e-3, help='lr for time embedding')
@@ -529,16 +524,19 @@ def main():
     
     early_stopping = EarlyStopping(patience=args.early_stopping_patience, verbose=True, ckpt_path=os.path.join(args.save_dir, 'model.pt'), best_ckpt_path=os.path.join(args.save_dir, 'best_model.pt'))
 
-    params = filter(lambda p: p.requires_grad, model.parameters())
+    params_diff_lr = ['ent_embedding', 'rel_embedding', 'image_embedding', 'location_embedding', 'time_embedding']
 
-    optimizer = optim.Adam(
-        [
+    optimizer_grouped_parameters = [
+            {"params": [param for p_name, param in model.named_parameters() if not any([x in p_name for x in params_diff_lr])]},
             {"params": model.ent_embedding.parameters(), "lr": args.lr},
             {"params": model.rel_embedding.parameters(), "lr": args.lr},
-            {"params": model.image_embedding.parameters(), "lr": 3e-5},
+            {"params": model.image_embedding.parameters(), "lr": args.img_lr},
             {"params": model.location_embedding.parameters(), "lr": args.loc_lr},
             {"params": model.time_embedding.parameters(), "lr": args.time_lr},
-        ],
+        ]
+
+    optimizer = optim.Adam(
+        optimizer_grouped_parameters,
         lr=args.lr,
         weight_decay=args.weight_decay)
 

@@ -20,7 +20,7 @@ Note: The dir. `data/iwildcam_v2.0/train/` contains images for all splits.
 
 # Training
 
-Note: The below commands will use the DistMult model by default.
+Note: The below commands will use the DistMult model by default. Use the following hyperparameter configuration:
 
 - For iWildCam2020-WILDS, set `DATA_DIR` to `data/iwildcam_v2.0/`, `IMG_DIR` to `data/iwildcam_v2.0/train/`, and `DATASET` to `iwildcam`
 - For Snapshot Mountain Zebra, set `DATA_DIR` to `data/snapshot_mountain_zebra/` and `IMG_DIR` to `data/snapshot_mountain_zebra/`, and `DATASET` to `mountain_zebra`.
