@@ -22,7 +22,7 @@ from tqdm import tqdm
 from utils import collate_list, detach_and_clone, move_to
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-from wilds.common.metrics.all_metrics import Accuracy, Recall, F1
+from wilds.common.metrics.all_metrics import Accuracy
 from PIL import Image
 from dataset import iWildCamOTTDataset
 import torchvision.transforms as transforms
@@ -96,8 +96,6 @@ def evaluate(model, val_loader, args):
 
     metrics = [
         Accuracy(prediction_fn=None),
-        Recall(prediction_fn=None, average='macro'),
-        F1(prediction_fn=None, average='macro'),
     ]
 
     results = {}
@@ -107,7 +105,7 @@ def evaluate(model, val_loader, args):
             **metrics[i].compute(epoch_y_pred, epoch_y_true),
                     })
 
-    print(f'Eval., split: {args.split}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100:.2f}, F1 macro: {results[metrics[2].agg_metric_field]*100:.2f}')
+    print(f'Eval., split: {args.split}, image to id, Average acc: {results[metrics[0].agg_metric_field]*100:.2f}')
 
     return y_pred_dict
 

@@ -18,7 +18,7 @@ from tqdm import tqdm
 from utils import collate_list, detach_and_clone, move_to
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-from wilds.common.metrics.all_metrics import Accuracy, Recall, F1
+from wilds.common.metrics.all_metrics import Accuracy
 from PIL import Image
 from pytorchtools import EarlyStopping
 
@@ -103,8 +103,6 @@ def run_epoch(model, train_loader, val_loader, optimizer, epoch, args, early_sto
 
     metrics = [
         Accuracy(prediction_fn=None),
-        Recall(prediction_fn=None, average='macro'),
-        F1(prediction_fn=None, average='macro'),
     ]
 
     results = {}
@@ -116,12 +114,10 @@ def run_epoch(model, train_loader, val_loader, optimizer, epoch, args, early_sto
 
     results_str = (
         f"Average acc: {results[metrics[0].agg_metric_field]:.3f}\n"
-        f"Recall macro: {results[metrics[1].agg_metric_field]:.3f}\n"
-        f"F1 macro: {results[metrics[2].agg_metric_field]:.3f}\n"
     )
     
     if not train: # just for eval.
-        early_stopping(-1*results[metrics[2].agg_metric_field], model, optimizer)
+        early_stopping(-1*results[metrics[0].agg_metric_field], model, optimizer)
 
     results['epoch'] = epoch
     # if dataset['verbose']:
@@ -131,11 +127,10 @@ def run_epoch(model, train_loader, val_loader, optimizer, epoch, args, early_sto
     return results, epoch_y_pred
 
 class iWildCamDataset(Dataset):
-    def __init__(self, datacsv, root, img_dir, mode, entity2id, target_list):  # dic_data <- datas
+    def __init__(self, datacsv, img_dir, mode, entity2id, target_list):  # dic_data <- datas
         super(iWildCamDataset, self).__init__()
         self.mode = mode
         self.datacsv = datacsv.loc[datacsv['split'] == mode, :]
-        self.root = root
         self.img_dir = img_dir
         self.entity2id = entity2id
         self.target_list = target_list
@@ -145,7 +140,7 @@ class iWildCamDataset(Dataset):
         return len(self.datacsv)
 
     def __getitem__(self, idx):
-        y = torch.tensor([self.entity_to_species_id[self.entity2id[str(int(float(self.datacsv.iloc[idx, -3])))]]], dtype=torch.long).squeeze()
+        y = torch.tensor([self.entity_to_species_id[self.entity2id[str(int(float(self.datacsv.iloc[idx, 3])))]]], dtype=torch.long).squeeze()
 
         img = Image.open(os.path.join(self.img_dir, self.datacsv.iloc[idx, 0])).convert('RGB')
 
@@ -174,6 +169,7 @@ def generate_target_list(data, entity2id):
 def main():
     
     parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset', choices=['iwildcam', 'mountain_zebra'], default='iwildcam')
     parser.add_argument('--data-dir', type=str, default='iwildcam_v2.0/')
     parser.add_argument('--img-dir', type=str, default='iwildcam_v2.0/imgs/')
     parser.add_argument('--batch_size', type=int, default=16)
@@ -208,20 +204,24 @@ def main():
     np.random.seed(args.seed)
     random.seed(args.seed)
 
-    datacsv = pd.read_csv(os.path.join(args.data_dir, 'dataset_subtree.csv'))
+    if args.dataset == 'iwildcam':
+        datacsv = pd.read_csv(os.path.join(args.data_dir, 'dataset_subtree.csv'), low_memory=False)
+    else:
+        datacsv = pd.read_csv(os.path.join(args.data_dir, 'data_triples.csv'), low_memory=False)
+
     datacsv = datacsv.loc[(datacsv["datatype_h"] == "image") & (datacsv["datatype_t"] == "id")]
 
     entity2id = {} # each of triple types have their own entity2id
         
     for i in tqdm(range(datacsv.shape[0])):
-        _get_id(entity2id, str(int(float(datacsv.iloc[i,-3]))))
+        _get_id(entity2id, str(int(float(datacsv.iloc[i,3]))))
 
     print('len(entity2id) = {}'.format(len(entity2id)))
 
     target_list = generate_target_list(datacsv, entity2id)
 
-    train_dataset = iWildCamDataset(datacsv, os.path.join('iwildcam_v2.0', 'imgs/'), args.img_dir, 'train', entity2id, target_list)
-    val_dataset = iWildCamDataset(datacsv, os.path.join('iwildcam_v2.0', 'imgs/'), args.img_dir, 'val', entity2id, target_list)
+    train_dataset = iWildCamDataset(datacsv, args.img_dir, 'train', entity2id, target_list)
+    val_dataset = iWildCamDataset(datacsv, args.img_dir, 'val', entity2id, target_list)
 
    
     train_loader = DataLoader(
