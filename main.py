@@ -255,6 +255,9 @@ def train(model, train_loader, optimizer, epoch_id, writer, args):
     if args.add_image_location:
         train_image_location(train_loader, model, optimizer, writer, args, epoch_id)
 
+        if args.add_image_time and not args.add_id_id:
+            train_image_id(train_loader, model, optimizer, writer, args, epoch_id)
+
     if args.add_image_time:
         train_image_time(train_loader, model, optimizer, writer, args, epoch_id)
     
@@ -382,6 +385,7 @@ def main():
     parser.add_argument('--add-id-id', action='store_true', help='add idtoid triples in addition to other triples for training')
     parser.add_argument('--add-image-location', action='store_true', help='add imagetolocation triples in addition to other triples for training')
     parser.add_argument('--add-image-time', action='store_true', help='use only imagetotime triples in addition to other triples for training')
+    parser.add_argument('--omit-double-img-id', action='store_true', help='omit double image id after location')
 
     # ConvE hyperparams
     parser.add_argument('--embedding-shape1', type=int, default=20, help='The first dimension of the reshaped 2D embedding. The second dimension is infered. Default: 20')
