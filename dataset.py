@@ -41,7 +41,7 @@ class iWildCamOTTDataset(Dataset):
         self.location_to_id = {}
 
         for i in range(len(datacsv_loc)):
-            loc = datacsv_loc.iloc[i, -3]
+            loc = datacsv_loc.iloc[i, 3]
 
             assert loc[0] == '['
             assert loc[-1] == ']'
@@ -56,7 +56,7 @@ class iWildCamOTTDataset(Dataset):
             self.time_to_id = {}
 
             for i in range(len(datacsv_time)):
-                time = datacsv_time.iloc[i, -3]
+                time = datacsv_time.iloc[i, 3]
 
                 _, hour = get_separate_time(time)
 
@@ -81,10 +81,10 @@ class iWildCamOTTDataset(Dataset):
     def __getitem__(self, idx):
 
         head_type = self.datacsv.iloc[idx, 1]
-        tail_type = self.datacsv.iloc[idx, -2]
+        tail_type = self.datacsv.iloc[idx, 4]
         head = self.datacsv.iloc[idx, 0]
         relation = self.datacsv.iloc[idx, 2]
-        tail = self.datacsv.iloc[idx, -3]
+        tail = self.datacsv.iloc[idx, 3]
 
         # for tail extract
         h = None

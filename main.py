@@ -355,6 +355,7 @@ def generate_target_list(data, entity2id):
 def main():
     
     parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset', choices=['iwildcam', 'mountain_zebra'], default='iwildcam')
     parser.add_argument('--data-dir', type=str, default='iwildcam_v2.0/')
     parser.add_argument('--img-dir', type=str, default='iwildcam_v2.0/imgs/')
     parser.add_argument('--batch_size', type=int, default=16)
@@ -407,9 +408,13 @@ def main():
 
     writer = SummaryWriter(log_dir=args.save_dir)
 
-    datacsv = pd.read_csv(os.path.join(args.data_dir, 'dataset_subtree.csv'), low_memory=False)
+    if args.dataset == 'iwildcam':
+        datacsv = pd.read_csv(os.path.join(args.data_dir, 'dataset_subtree.csv'), low_memory=False)
+        entity_id_file = os.path.join(args.data_dir, 'entity2id_subtree.json')
+    else:
+        datacsv = pd.read_csv(os.path.join(args.data_dir, 'data_triples.csv'), low_memory=False)
+        entity_id_file = os.path.join(args.data_dir, 'entity2id.json')
 
-    entity_id_file = os.path.join(args.data_dir, 'entity2id_subtree.json')
 
     if not os.path.exists(entity_id_file):
         entity2id = {} # each of triple types have their own entity2id
@@ -418,8 +423,8 @@ def main():
             if datacsv.iloc[i,1] == "id":
                 _get_id(entity2id, str(int(float(datacsv.iloc[i,0]))))
 
-            if datacsv.iloc[i,-2] == "id":
-                _get_id(entity2id, str(int(float(datacsv.iloc[i,-3]))))
+            if datacsv.iloc[i,4] == "id":
+                _get_id(entity2id, str(int(float(datacsv.iloc[i,3]))))
         json.dump(entity2id, open(entity_id_file, 'w'))
     else:
         entity2id = json.load(open(entity_id_file, 'r'))
