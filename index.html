@@ -264,145 +264,138 @@ camera traps are jointly represented in the KG with contextual information such 
                         <h2 class="title is-3">Species Classification results on iWildCam2020-WILDS (OOD) dataset.</h2>
                         <div class="content has-text-justified">
                             
-                            <table border="1">
-                                <caption>Species Classification results on iWildCam2020-WILDS (OOD) dataset. The first baseline in the second section shows the no-context baseline that uses only image-species labels as KG edges. All models use a pre-trained ResNet-50 as image encoder. Parentheses show standard deviation across 3 random seeds. Missing values are denoted by --.</caption>
+                            <style type="text/css">
+                                .tg  {border-collapse:collapse;border-spacing:0;}
+                                .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+                                  overflow:hidden;padding:10px 5px;word-break:normal;}
+                                .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+                                  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+                                .tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
+                                .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+                                .tg .tg-wp8o{border-color:#000000;text-align:center;vertical-align:top}
+                                .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+                                </style>
+                                <table class="tg">
                                 <thead>
-                                    <tr>
-                                        <th rowspan="2"></th>
-                                        <th rowspan="2"><strong>Model</strong></th>
-                                        <th colspan="3"><strong>Multi-modality</strong></th>
-                                        <th rowspan="2"><strong>Val. Acc.</strong></th>
-                                        <th rowspan="2"><strong>Test Acc.</strong></th>
-                                    </tr>
-                                    <tr>
-                                        <th><strong>Taxonomy</strong></th>
-                                        <th><strong>Location</strong></th>
-                                        <th><strong>Time</strong></th>
-                                    </tr>
+                                  <tr>
+                                    <th class="tg-0pky" rowspan="2"></th>
+                                    <th class="tg-0pky" rowspan="2">Model</th>
+                                    <th class="tg-c3ow" colspan="3">Multi-modality</th>
+                                    <th class="tg-0pky" rowspan="2">Val. Acc.</th>
+                                    <th class="tg-0pky" rowspan="2">Test Acc.</th>
+                                  </tr>
+                                  <tr>
+                                    <th class="tg-0pky">Taxonomy</th>
+                                    <th class="tg-0pky">Location</th>
+                                    <th class="tg-0pky">Time</th>
+                                  </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td>Empirical Risk Minimization (ERM)</td>
-                                        <td></td>
-                                        <td rowspan="5">--</td>
-                                        <td></td>
-                                        <td>62.7 (2.4)</td>
-                                        <td>71.6 (2.5)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>CORAL</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>60.3 (2.8)</td>
-                                        <td>73.3 (4.3)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Group DRO</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>60.0 (0.7)</td>
-                                        <td>72.7 (2.0)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Fish</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>58.0 (0.2)</td>
-                                        <td>63.2 (0.7)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>ABSGD</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>--</td>
-                                        <td>72.7 (1.8)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>\model(no-context)</td>
-                                        <td></td>
-                                        <td>--</td>
-                                        <td></td>
-                                        <td>63.2 (0.4)</td>
-                                        <td>68.8 (2.1)</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="3">Single context</td>
-                                        <td>\model</td>
-                                        <td>✔</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>62.8 (2.2) (-0.4)</td>
-                                        <td>72.4 (2.5) (+3.6)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\model</td>
-                                        <td></td>
-                                        <td>✔</td>
-                                        <td></td>
-                                        <td>64.4 (1.0) (+1.2)</td>
-                                        <td><strong>74.5 (3.6) (+5.7)</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>\model</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>✔</td>
-                                        <td>64.7 (0.4) (+1.5)</td>
-                                        <td>71.1 (3.1) (+2.3)</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="4">Multiple contexts</td>
-                                        <td>\model</td>
-                                        <td>✔</td>
-                                        <td>✔</td>
-                                        <td></td>
-                                        <td><strong>65.4 (0.4) (+2.2)</strong></td>
-                                        <td>70.4 (2.1) (+1.6)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\model</td>
-                                        <td>✔</td>
-                                        <td></td>
-                                        <td>✔</td>
-                                        <td>64.9 (1.6) (+1.7)</td>
-                                        <td>73.7 (3.8) (+4.9)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\model</td>
-                                        <td></td>
-                                        <td>✔</td>
-                                        <td>✔</td>
-                                        <td>63.0 (2.1) (-0.2)</td>
-                                        <td>74.2 (2.2) (+5.4)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\model</td>
-                                        <td>✔</td>
-                                        <td>✔</td>
-                                        <td>✔</td>
-                                        <td>65.0 (1.6) (+1.8)</td>
-                                        <td>71.5 (2.8) (+2.7)</td>
-                                    </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-wp8o">Empirical Risk Minimization (ERM)</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky" rowspan="5">--</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">62.7 (2.4)</td>
+                                    <td class="tg-0pky">71.6 (2.5)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-wp8o">CORAL</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">60.3 (2.8)</td>
+                                    <td class="tg-0pky">73.3 (4.3)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-wp8o">Group DRO</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">60.0 (0.7)</td>
+                                    <td class="tg-0pky">72.7 (2.0)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-wp8o">Fish</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">58.0 (0.2)</td>
+                                    <td class="tg-0pky">63.2 (0.7)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-wp8o">ABSGD</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">--</td>
+                                    <td class="tg-0pky">72.7 (1.8)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-wp8o">COSMO (no-context)</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">--</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">63.2 (0.4)</td>
+                                    <td class="tg-0pky">68.8 (2.1)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky" rowspan="3">Single context</td>
+                                    <td class="tg-9wq8" rowspan="3">COSMO</td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">62.8 (2.2) (<span style="color:#CB0000">-0.4</span>)</td>
+                                    <td class="tg-0pky">72.4 (2.5) (<span style="color:#009901">+3.6</span>)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">64.4 (1.0) (<span style="color:#009901">+1.2</span>)</td>
+                                    <td class="tg-0pky">74.5 (3.6) (<span style="color:#009901">+5.7</span>)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">64.7 (0.4) (<span style="color:#009901">+1.5</span>)</td>
+                                    <td class="tg-0pky">71.1 (3.1) (<span style="color:#009901">+2.3</span>)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky" rowspan="4">Multiple contexts</td>
+                                    <td class="tg-9wq8" rowspan="4"><span style="font-weight:400;font-style:normal">COSMO</span></td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">65.4 (0.4) (<span style="color:#009901">+2.2</span>)</td>
+                                    <td class="tg-0pky">70.4 (2.1) (<span style="color:#009901">+1.6</span>)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">64.9 (1.6) (<span style="color:#009901">+1.7</span>)</td>
+                                    <td class="tg-0pky">73.7 (3.8) (<span style="color:#009901">+4.9</span>)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky"></td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">63.0 (2.1) (<span style="color:#CB0000">-0.2</span>)</td>
+                                    <td class="tg-0pky">74.2 (2.2) (<span style="color:#009901">+5.4</span>)</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">✔</td>
+                                    <td class="tg-0pky">65.0 (1.6) (<span style="color:#009901">+1.8</span>)</td>
+                                    <td class="tg-0pky">71.5 (2.8) (<span style="color:#009901">+2.7</span>)</td>
+                                  </tr>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="7">Note: Parentheses show standard deviation across 3 random seeds. Missing values are denoted by --.</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
+                                </table>
 
 
 
