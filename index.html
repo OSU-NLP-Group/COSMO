@@ -169,7 +169,7 @@
         <div class="hero-body">
             <div class="container is-max-desktop">
                 <div class="columns is-centered">
-                    <div class="column is-four-fifths">
+                    <!-- <div class="column is-four-fifths"> -->
                         <div class="item">
                             <!-- Your image here -->
                             <img src="static/images/mmkg_model_combined.png" alt="Overview of COSMO framework" />
@@ -178,7 +178,7 @@
 camera traps are jointly represented in the KG with contextual information such as time, location, and structured biology taxonomy. <b><i>Right</b></i>: In our formulation of species classification as link prediction, the plausibility score ψ(s, r, o) of each (subject, relation, object) triple is computed using a KGE model (<i>e.g.</i>, DistMult), where the subject, relation, and object are all first embedded into a vector space. 
                             </h2>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -190,20 +190,22 @@ camera traps are jointly represented in the KG with contextual information such 
         <div class="hero-body">
             <div class="container  is-max-desktop">
                 <div class="columns is-centered has-text-centered">
-                    <div class="column is-four-fifths">
+                    <!-- <div class="column is-four-fifths"> -->
                         <h2 class="title is-3">Overall Results</h2>
                         <div class="item">
                             <img src="static/images/iwildcam_results_table.png" alt="Species Classification results on iWildCam2020-WILDS (OOD) dataset" />
-                            <!-- <embed src="static/images/iwildcam_results_table.pdf" alt="Species Classification results on iWildCam2020-WILDS (OOD) dataset" width="2677px" height="1890px"/> -->
-                            <!-- <h2 class="subtitle has-text-centered"> -->
-                                <!-- Figure 2: Overall results of 🦣MAmmoTH on the in-domain and out-of-domain datasets. -->
-                            <!-- </h2> -->
-                            <!-- <p>
-                                Overall, we can see that MAmmoTH and MAmmoTH-Coder are able to outperform the SoTA model at different scales. In general, the performance gain for OOD datasets is more significant than IND datasets. These results show us the potential of our models as
-                                a mathematical generalist. On several datasets, MAmmoTH-Coder-34B and MAmmoTH-70B are even surpassing closed-source LLMs (see more break down results below).
-                            </p> -->
+                            <p>
+                                Species Classification results on iWildCam2020-WILDS (OOD) dataset. The first baseline in the second section shows the
+                                no-context baseline that uses only image-species labels as KG edges. All models use a pre-trained ResNet-50 as image encoder. Parentheses show standard deviation across 3 random seeds. Missing values are denoted by –.
+                            </p>
                         </div>
-                    </div>
+                        <div class="item">
+                            <img src="static/images/snapshot_mountain_zebra_results_table.png" alt="Species Classification results on Snapshot Mountain Zebra dataset" />
+                            <p>
+                                Species Classification results on Snapshot Mountain Zebra dataset.
+                            </p>
+                        </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -391,7 +393,7 @@ camera traps are jointly represented in the KG with contextual information such 
     <section class="section" id="BibTeX">
         <div class="container is-max-desktop content">
             <h2 class="title">Citation</h2>
-            Please cite our paper if you use our code, data, models or results:
+            Please cite our paper if you use our code, data, model or results:
             <br><br>
             <pre><code>@article{pahuja2023bringing,
   title={Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs},
