@@ -1,9 +1,12 @@
 
 # COSMO
 
-Code for the paper ["Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs"](https://arxiv.org/pdf/2401.00608.pdf)
+## Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs
 
-[**Project webpage**](https://osu-nlp-group.github.io/COSMO/)
+**Paper**: https://arxiv.org/pdf/2401.00608.pdf
+**Project webpage**: https://osu-nlp-group.github.io/COSMO/
+
+
 **Authors**: Vardaan Pahuja, Weidi Luo, Yu Gu, Cheng-Hao Tu, Hong-You Chen, Tanya Berger-Wolf, Charles Stewart, Song Gao, Wei-Lun Chao, and Yu Su
 
 ## Installation
