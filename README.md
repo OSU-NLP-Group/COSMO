@@ -1,7 +1,7 @@
 
 # COSMO
 
-## Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs
+## [CIKM'24] Reviving the Context: Camera Trap Species Classification as Link Prediction on Multimodal Knowledge Graphs
 
 **Paper**: https://arxiv.org/pdf/2401.00608.pdf
 
