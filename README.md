@@ -1,7 +1,7 @@
 
 # COSMO
 
-## Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs
+## [CIKM'24] Reviving the Context: Camera Trap Species Classification as Link Prediction on Multimodal Knowledge Graphs
 
 **Paper**: https://arxiv.org/pdf/2401.00608.pdf
 
@@ -120,4 +120,14 @@ python dump_kge_pred_specie_wise.py --ckpt-path <PATH TO COSMO MODEL> --split te
 ```
 cd gen_utils/
 python eval_kge_specie_wise.py --y-pred-path-1 <PATH TO PREDICTIONS JSON FILE OF BASELINE MODEL> --y-pred-path-2 <PATH TO COSMO PREDICTIONS JSON FILE>
+```
+
+## Citation
+```
+@article{pahuja2023bringing,
+  title={Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs},
+  author={Pahuja, Vardaan and Luo, Weidi and Gu, Yu and Tu, Cheng-Hao and Chen, Hong-You and Berger-Wolf, Tanya and Stewart, Charles and Gao, Song and Chao, Wei-Lun and Su, Yu},
+  journal={arXiv preprint arXiv:2401.00608},
+  year={2023}
+}
 ```
