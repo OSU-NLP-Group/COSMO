@@ -68,6 +68,12 @@ python -u main.py --data-dir DATA_DIR --img-dir IMG_DIR/ --save-dir CKPT_DIR --a
 python -u main.py --data-dir DATA_DIR --img-dir IMG_DIR --save-dir CKPT_DIR --add-id-id --add-image-time --add-image-location > CKPT_DIR/log.txt
 ```
 
+### MLP-concat baseline
+```
+python -u run_kge_model_baseline.py --img-dir IMG_DIR --save-dir CKPT_DIR --ILT --use-mlp --embedding-dim 512 --use-subtree --only-hour --time_input_dim 1 --early-stopping-patience 10 > CKPT_DIR/log.txt
+
+```
+
 ## Evaluation
 
 ### Evaluate a model (specify split)
