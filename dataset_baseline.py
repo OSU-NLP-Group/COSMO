@@ -42,8 +42,8 @@ class iWildCamOTTDataset(Dataset):
 
         # print('time = {}'.format(time.size()))
 
-        print('self.loc_avg = {}'.format(self.loc_avg))
-        print('self.time_avg = {}'.format(self.time_avg))
+        # print('self.loc_avg = {}'.format(self.loc_avg))
+        # print('self.time_avg = {}'.format(self.time_avg))
 
         self.datacsv_loc_time = pd.merge(self.datacsv_loc, self.datacsv_time, how='outer', left_on=['h','datatype_h','split'], right_on=['h','datatype_h','split'])
 

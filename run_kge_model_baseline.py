@@ -34,7 +34,6 @@ from wilds.common.metrics.all_metrics import Accuracy, Recall, F1
 from PIL import Image
 from dataset_baseline import iWildCamOTTDataset
 from pytorchtools import EarlyStopping
-from gen_utils.train_utils import *
 
 _DEFAULT_IMAGE_TENSOR_NORMALIZATION_MEAN = [0.485, 0.456, 0.406]
 _DEFAULT_IMAGE_TENSOR_NORMALIZATION_STD = [0.229, 0.224, 0.225]

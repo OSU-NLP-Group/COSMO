@@ -74,8 +74,7 @@ class MKGE(nn.Module):
         if self.args.use_learned_loc_embed:
             nn.init.xavier_uniform_(self.location_embedding.weight.data)
 
-        if self.args.use_mlp:
-            nn.init.xavier_uniform_(self.mlp.weight.data)
+        nn.init.xavier_uniform_(self.mlp.weight.data)
 
         nn.init.xavier_uniform_(self.classifier.weight.data)
 
