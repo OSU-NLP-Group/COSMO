@@ -124,10 +124,20 @@ python eval_kge_specie_wise.py --y-pred-path-1 <PATH TO PREDICTIONS JSON FILE OF
 
 ## Citation
 ```
-@article{pahuja2023bringing,
-  title={Bringing Back the Context: Camera Trap Species Identification as Link Prediction on Multimodal Knowledge Graphs},
-  author={Pahuja, Vardaan and Luo, Weidi and Gu, Yu and Tu, Cheng-Hao and Chen, Hong-You and Berger-Wolf, Tanya and Stewart, Charles and Gao, Song and Chao, Wei-Lun and Su, Yu},
-  journal={arXiv preprint arXiv:2401.00608},
-  year={2023}
+@inproceedings{10.1145/3627673.3679545,
+author = {Pahuja, Vardaan and Luo, Weidi and Gu, Yu and Tu, Cheng-Hao and Chen, Hong-You and Berger-Wolf, Tanya and Stewart, Charles and Gao, Song and Chao, Wei-Lun and Su, Yu},
+title = {Reviving the Context: Camera Trap Species Classification as Link Prediction on Multimodal Knowledge Graphs},
+year = {2024},
+isbn = {9798400704369},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi-org.proxy.lib.ohio-state.edu/10.1145/3627673.3679545},
+doi = {10.1145/3627673.3679545},
+booktitle = {Proceedings of the 33rd ACM International Conference on Information and Knowledge Management},
+pages = {1825–1835},
+numpages = {11},
+keywords = {KG link prediction, camera traps, multimodal knowledge graph, species classification},
+location = {Boise, ID, USA},
+series = {CIKM '24}
 }
 ```
