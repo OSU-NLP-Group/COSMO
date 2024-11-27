@@ -1,6 +1,8 @@
 
 # COSMO
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/bringing-back-the-context-camera-trap-species/image-classification-on-iwildcam2020-wilds)](https://paperswithcode.com/sota/image-classification-on-iwildcam2020-wilds?p=bringing-back-the-context-camera-trap-species)
+
 ## [CIKM'24] Reviving the Context: Camera Trap Species Classification as Link Prediction on Multimodal Knowledge Graphs
 
 **Paper**: https://arxiv.org/pdf/2401.00608.pdf
